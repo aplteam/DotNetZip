@@ -1,0 +1,21 @@
+ r←Test_022(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;this;expected;list
+⍝ Create a new Zip archive and add some files but drop one level of the path
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←F.GetTempSubDir 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ 1 myZip.Add'./TestData\level-1-a.txt'
+ 2 myZip.Add'./TestData\level-1-b.txt'
+ list←myZip.List
+
+ expected←F.NormalizePath'TestData\level-1-a.txt' 'level-1-b.txt'
+ →T.GoToTidyUp list≢expected
+
+ r←T._OK
+
+∆TidyUp:
+ F.RmDir path
+⍝Done

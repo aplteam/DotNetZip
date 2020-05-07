@@ -1,0 +1,23 @@
+ r←Test_004(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list2;this;list1
+⍝ Create a new Zip archive by zipping a folder (shared method), then unzip and check
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←F.GetTempSubDir 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ zipFilename←'./TestData/'##.DotNetZip.ZipFolder zipFilename
+
+ list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵}'./TestData/'
+
+ path,←'/unzipped'
+ F.MkDir path
+ zipFilename ##.DotNetZip.UnzipTo path
+ list2←(1+≢path)↓¨⊃('recursive' 1)F.Dir path,'/'
+
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ F.RmDir path
+⍝Done

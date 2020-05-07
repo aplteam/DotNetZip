@@ -1,0 +1,26 @@
+ r←Test_021(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1
+⍝ Create a new Zip archive and add some files
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←F.GetTempSubDir 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ myZip.Add'./TestData\level-1-a.txt'
+ myZip.Add'./TestData\level-1-b.txt'
+ myZip.Add'./TestData/sub-1/sub-1-level-2-a.txt'
+ myZip.Add'./TestData/sub-1/sub-1-level-2-b.txt'
+ myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
+ myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ list1←myZip.List
+
+ list2←⊃('recursive' 1)F.Dir'./TestData/'
+ list2/⍨←F.IsFile list2
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ F.RmDir path
+⍝Done

@@ -1,0 +1,33 @@
+ r←Test_024(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list2;this;list1;sourceFolder;myZip
+⍝ Zip a folder, then change one of the files and update the archive afterwards
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←F.GetTempSubDir 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+
+ F.MkDir sourceFolder←path,'/source/'
+ F.MkDir targetFolder←path,'/target/'
+
+ sourceFolder ⎕NCOPY'./TestData/'
+
+ zipFilename←sourceFolder ##.DotNetZip.ZipFolder zipFilename
+
+ (⊂'Hello world')F.NPUT(sourceFolder,'level-1-a.txt')1
+
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵}'./TestData/'
+
+ path,←'/unzipped'
+ F.MkDir path
+ zipFilename ##.DotNetZip.UnzipTo path
+ list2←(1+≢path)↓¨⊃('recursive' 1)F.Dir path,'/'
+
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ F.RmDir path
+⍝Done

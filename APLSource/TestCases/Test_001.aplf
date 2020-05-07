@@ -1,0 +1,23 @@
+ r←Test_001(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list1;list2
+⍝ Zip a single file without extension (becomes ".zip") and then unzip it and check its content.
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←F.GetTempSubDir 1⊃⎕SI
+ zipFilename←path,'/MyZipFile'
+ zipFilename←'./TestData'##.DotNetZip.ZipFolder zipFilename
+ list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵}'./TestData/'
+
+ targetFolder←path,'/Unzipped'
+ F.MkDir targetFolder
+
+ zipFilename ##.DotNetZip.UnzipTo targetFolder
+
+ list2←(1+≢targetFolder)↓¨⊃('recursive' 1)F.Dir targetFolder,'/'
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ F.RmDir path
+⍝Done

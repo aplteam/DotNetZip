@@ -1,0 +1,4 @@
+ Prepare
+ T←⎕NEW ##.Tester2 ⎕THIS
+ A←##.APLTreeUtils
+ F←##.FilesAndDirs
