@@ -94,4 +94,4 @@ To get around this you can specify a parent folder as left argument, and specify
       'tmp/MyStuff/' myZip.Add 'foo/sub/foo.dll'
 ```
 
-Note that it does not matter whether the left argument carries a trailing separator or not, and that it does not matter whether the left argument(s) carry a leading separator or not: `DotNetZip` works that out.
+Note that it does not matter whether the left argument carries a trailing separator or not, and that it does not matter whether the right argument(s) carry a leading separator or not: `DotNetZip` works that out.
