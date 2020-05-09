@@ -1,33 +1,25 @@
- r←Test_024(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list2;this;list1;sourceFolder;myZip
-⍝ Zip a folder, then change one of the files and update the archive afterwards
+ r←Test_024(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;this;expected;list
+⍝ Create a new Zip archive and add some files but drop one level of the path. Syntax III.
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
 
- path←F.GetTempSubDir 1⊃⎕SI
+ path←∆GetTestFolderInTemp 1⊃⎕SI
  zipFilename←path,'/MyZipFile.zip'
-
- F.MkDir sourceFolder←path,'/source/'
- F.MkDir targetFolder←path,'/target/'
-
- sourceFolder ⎕NCOPY'./TestData/'
-
- zipFilename←sourceFolder ##.DotNetZip.ZipFolder zipFilename
-
- (⊂'Hello world')F.NPUT(sourceFolder,'level-1-a.txt')1
-
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
- list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵}'./TestData/'
+ myZip.Dispose
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
- path,←'/unzipped'
- F.MkDir path
- zipFilename ##.DotNetZip.UnzipTo path
- list2←(1+≢path)↓¨⊃('recursive' 1)F.Dir path,'/'
+ './'myZip.Add'/TestData\level-1-a.txt'
+ './TestData\'myZip.Add'/level-1-b.txt'
+ list←myZip.List
 
- →T.GoToTidyUp list1≢list2
+ expected←F.NormalizePath'TestData\level-1-a.txt' 'level-1-b.txt'
+ →T.GoToTidyUp list≢expected
 
  r←T._OK
 
 ∆TidyUp:
- F.RmDir path
+ ⎕EX'myZip'
+ Assert 0=1⊃F.RmDir path
 ⍝Done

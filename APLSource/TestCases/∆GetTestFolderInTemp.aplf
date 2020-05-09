@@ -1,0 +1,6 @@
+ r←∆GetTestFolderInTemp prefix
+ r←F.GetTempPath
+ r,←'DotNetZip_Tests/',prefix
+ F.RmDir r
+ Assert F.MkDir r
+ ⍝Done

@@ -1,0 +1,32 @@
+ r←Test_042(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip
+⍝ Create a new Zip archive, addtwo files ine one go and then update two of them in one go
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ F.MkDir path,'/src'
+ F.MkDir path,'/unzipped'
+ (path,'/src/')⎕NCOPY'./TestData\level-1-a.txt'
+ (path,'/src/')⎕NCOPY'./TestData\level-1-b.txt'
+
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ path myZip.Add'src/level-1-a.txt' 'src/level-1-b.txt'
+
+ (⊂'First')F.NPUT(path,'/src/level-1-a.txt')1
+ (⊂'Second')F.NPUT(path,'/src/level-1-b.txt')1
+
+ path myZip.Update'/src/level-1-b.txt' '/src/level-1-a.txt'
+ myZip.Dispose
+
+ zipFilename ##.DotNetZip.UnzipTo path,'/unzipped'
+ →T.GoToTidyUp'First'{⍺≢(≢⍺)↑⍵}1⊃F.NGET path,'/src/level-1-a.txt'
+ →T.GoToTidyUp'Second'{⍺≢(≢⍺)↑⍵}1⊃F.NGET path,'/src/level-1-b.txt'
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done

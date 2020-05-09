@@ -1,5 +1,5 @@
- r←Test_021(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1
-⍝ Create a new Zip archive and add some files
+ r←Test_028(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1;path2
+⍝ Create a new Zip archive, add some files and then unzip it
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
 
@@ -13,10 +13,15 @@
  myZip.Add'./TestData/sub-1/sub-1-level-2-b.txt'
  myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
  myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
- list1←myZip.List
+ myZip.Dispose
 
- list2←⊃('recursive' 1)F.Dir'./TestData/'
- list2/⍨←F.IsFile list2
+ list1←2↓¨⊃('recursive' 1)F.Dir'./TestData/'
+
+ path2←path,'/unzipped'
+ F.MkDir path
+ zipFilename ##.DotNetZip.UnzipTo path2
+ list2←(1+≢path2)↓¨1↓⊃('recursive' 1)F.Dir path2,'/'
+
  →T.GoToTidyUp list1≢list2
 
  r←T._OK

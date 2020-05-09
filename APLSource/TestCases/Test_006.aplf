@@ -1,0 +1,25 @@
+ r←Test_006(stopFlag batchFlag);⎕TRAP;path;zipFilename;myZip;qdmx
+⍝ Check that the `filename` property a) is set correctly and b) is read-only
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ →T.GoToTidyUp myZip.filename≢F.NormalizePath zipFilename
+
+ :Trap 0
+     myZip.filename←'Hello'
+     →T.GoToTidyUp 1
+ :Else
+     qdmx←⎕DMX
+     →T.GoToTidyUp 2≠qdmx.EN
+ :EndTrap
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done

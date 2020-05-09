@@ -1,0 +1,24 @@
+ r←Test_005(stopFlag batchFlag);⎕TRAP;path;zipFilename;myZip;list1;list2
+⍝ Create a non-existing zip file with `overwriteFlag←0` and then add some files to it
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(zipFilename 0)
+
+ list←⊃('recursive' 1)F.Dir'./TestData/'
+ list/⍨←F.IsFile list
+
+ myZip.Add¨list
+ list1←myZip.List
+ myZip.Dispose
+ list2←##.DotNetZip.ListZipContents zipFilename
+
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ Assert 0=1⊃F.RmDir path
+⍝Done
