@@ -6,8 +6,8 @@
  path←∆GetTestFolderInTemp 1⊃⎕SI
  F.MkDir path,'/src'
  F.MkDir path,'/unzipped'
- (path,'/src/')⎕NCOPY'./TestData\level-1-a.txt'
- (path,'/src/')⎕NCOPY'./TestData\level-1-b.txt'
+ (path,'/src/')⎕NCOPY F.ExpandPath'./TestData\level-1-a.txt'
+ (path,'/src/')⎕NCOPY F.ExpandPath'./TestData\level-1-b.txt'
 
  zipFilename←path,'/MyZipFile.zip'
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
