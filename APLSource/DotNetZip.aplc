@@ -15,10 +15,13 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.5.0.8' '2020-05-09'
+      r←'DotNetZip' '0.5.1.16' '2020-05-12'
     ∇
 
     ∇ History
+    ⍝ * 0.5.1 from 2020-05-12
+    ⍝   * Minor bug fix in `ZipFolder`
+    ⍝   * ...
     ⍝ * 0.5.0 from 2020-05-09
     ⍝   * First version published on GitHub as beta
     ∇
@@ -176,7 +179,6 @@
     ∇ {targetFile}←sourceFolder ZipFolder targetFile
     ⍝ Takes a folder and zips it. `target` must not exist.
       :Access Public Shared
-      r←⍬
       Initialize ⍬
       targetFile←F.ExpandPath AddExtension targetFile
       sourceFolder←F.ExpandPath sourceFolder

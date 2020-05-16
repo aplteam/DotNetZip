@@ -9,6 +9,16 @@ Note that although .NET Core is required on Linux and Mac OS, under Windows it a
 
 Therefore this class works even under Dyalog 16.0, though you can run the test cases only in 17.0 and later.
 
+## Requirements
+
+Dyalog APL: DotNetZip runs under 16.0 and later, but in order to execute the test cases you need 17.0 or better.
+
+.NET: 
+
+* Under Windows any modern version of .NET **_or_** .NET Core 3.1 is required
+
+* On non-Windows platforms .NET Core 3.1 is required
+
 
 ## Using shared methods
 
@@ -38,7 +48,7 @@ First you need to create an instance:
  myZip←DotNetZip (,⊂'C:\Temp\MyZip')
 ```
 
-This instance offers these instance methods:
+The instance offers these methods:
 
 ```
 Add             
@@ -51,7 +61,10 @@ Update
 
 ### Processing one or more files
 
-`Add`, `Delete` and `Update` all process a right argument that is a simple character vector as a single filename while a vector of text vectors is treated as a vector of filenames
+`Add`, `Delete` and `Update` all process a right argument...
+
+* a simple character vector as a single filename 
+* a vector of text vectors is treated as a vector of filenames
 
 
 ### Relative versus absolute paths with instances
@@ -78,20 +91,20 @@ When the folder `foo` lives in your current directory then, assuming that your i
 When the folder `foo` lives in `tmp/MyStuff/` then you could use this:
 
 ```
-      myZip.Add 'tmp/MyStuff/foo/readme.txt' 
-      myZip.Add'tmp/MyStuff/foo/sub/foo.dll'
+      myZip.Add '/tmp/MyStuff/foo/readme.txt' 
+      myZip.Add '/tmp/MyStuff/foo/sub/foo.dll'
 ```
 
-The obvious disadvantage is that the full path is preserved in the ZIP file, meaning that the files can only ever be unzipped into   `/tmp/MyStuff/`; if that does not exist, the operation will fail.    
+The obvious disadvantage is that the full path is preserved in the ZIP file, meaning that the files can only ever be unzipped into `/tmp/MyStuff/`; if that does not exist, the operation will fail.    
 
 
 ### Specifying a parent folder
 
-To get around this you can specify a parent folder as left argument, and specify on the right everything that should be preserved, `foo/` in our case:
+To get around this you can specify a parent folder as left argument, and specify on the right everything what should be preserved, `foo/` in our case:
 
 ```
-      'tmp/MyStuff/' myZip.Add 'foo/readme.txt' 
-      'tmp/MyStuff/' myZip.Add 'foo/sub/foo.dll'
+      '/tmp/MyStuff/' myZip.Add 'foo/readme.txt' 
+      '/tmp/MyStuff/' myZip.Add 'foo/sub/foo.dll'
 ```
 
 Note that it does not matter whether the left argument carries a trailing separator or not, and that it does not matter whether the right argument(s) carry a leading separator or not: `DotNetZip` works that out.
