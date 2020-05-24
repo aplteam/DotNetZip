@@ -7,17 +7,16 @@ The `DotNetZip` class allows one to zip and unzip files with .NET Core on all ma
 
 Note that although .NET Core is required on Linux and Mac OS, under Windows it also works with .NET rather than .Net Core.
 
-Therefore this class works even under Dyalog 16.0, though you can run the test cases only in 17.0 and later.
 
 ## Requirements
 
-Dyalog APL: DotNetZip runs under 16.0 and later, but in order to execute the test cases you need 17.0 or better.
+Dyalog APL: DotNetZip runs under 16.0 and later but if you want to run the test cases you need 17.0 or better.
 
 .NET: 
 
-* Under Windows any modern version of .NET **_or_** .NET Core 3.1 is required
+* Under Windows any modern version of .NET **_or_** .NET Core 3.1 (or better) is required
 
-* On non-Windows platforms .NET Core 3.1 is required
+* On non-Windows platforms .NET Core 3.1 (or better) is required
 
 
 ## Using shared methods
