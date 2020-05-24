@@ -11,7 +11,8 @@
 ⍝ * `Add`
 ⍝ * `Delete`
 ⍝ * `Update`
-⍝ * `List`\\
+⍝ * `List`
+⍝ * `Dispose`\\
 ⍝ Once instanciated the read-only property `filename` carries the name of the ZIP file.\\
 ⍝ This class requires the class `FilesAndDirs` and the namespace script `APLTreeUtils`.\\
 ⍝ Kai Jaeger - APL Team Ltd.\\
@@ -23,7 +24,7 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.6.0.27' '2020-05-24'
+      r←'DotNetZip' '0.6.0.28' '2020-05-24'
     ∇
 
     ∇ History

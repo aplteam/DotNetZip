@@ -10,7 +10,7 @@ Note that although .NET Core is required on Linux and Mac OS, under Windows it a
 
 ## Requirements
 
-Dyalog APL: DotNetZip runs under 16.0 and later but if you want to run the test cases you need 17.0 or better.
+Dyalog APL: DotNetZip runs under 16.0 and later.
 
 .NET: 
 
