@@ -10,7 +10,10 @@ Note that although .NET Core is required on Linux and Mac OS, under Windows it a
 
 ## Requirements
 
-Dyalog APL: DotNetZip runs under 16.0 and later.
+Dyalog APL: 
+
+* Under Windows DotNetZip runs under 16.0 and later
+* Under Linux and MacOS .NET Core is required which is supported only by Dyalog 18.0 and later
 
 .NET: 
 
