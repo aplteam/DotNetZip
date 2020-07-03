@@ -24,10 +24,12 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.6.0.28' '2020-05-24'
+      r←'DotNetZip' '0.7.0.29' '2020-07-03'
     ∇
 
     ∇ History
+    ⍝ * 0.7.0 from 2020-07-03
+    ⍝   * The default for "overwriteFlag" when only a zip filename was passed was 1. Should be 0.
     ⍝ * 0.6.0 from 2020-05-24
     ⍝   * `Add` now accepts and processes folders as well as files
     ⍝   * Documentation improved
@@ -49,7 +51,7 @@
     ⍝ If `zipFilename` already exists it is overwritten.
       :Access Public Instance
       :Implements Constructor
-      overwriteFlag←1
+      overwriteFlag←0
       make zipFilename overwriteFlag
     ⍝Done
     ∇

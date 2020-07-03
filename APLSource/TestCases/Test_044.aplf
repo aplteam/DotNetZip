@@ -1,0 +1,36 @@
+ r←Test_044(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;src2;list2;list1;path2
+⍝ Create a new Zip archive, close it, instanciate again with just the filename
+⍝ Should result in re-opening the zip file rather than replacing it
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ F.MkDir path,'/src'
+ F.MkDir path,'/unzipped'
+ (F.ExpandPath'./TestData\level-1-a.txt')F.CopyTo path,'/src/'
+ (F.ExpandPath'./TestData\level-1-b.txt')F.CopyTo path,'/src/'
+ F.MkDir src2←path,'/src/subfolder1/subfolder2'
+ (⊂'Blabla')F.NPUT src2,'/my.txt'
+ path2←path,'/src'
+
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+
+ path2 myZip.Add'level-1-a.txt' 'level-1-b.txt'((1+≢path2)↓src2)
+
+ myZip.Dispose
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)         ⍝ Was once a bug that overwrote the original zip file
+ myZip.Dispose
+
+ zipFilename ##.DotNetZip.UnzipTo path,'/unzipped'
+
+ list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵,'*'}path2,'/'
+ list2←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵,'*'}path,'/unzipped/'
+ →T.GoToTidyUp~list1 ∆LayMatch list2
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done
