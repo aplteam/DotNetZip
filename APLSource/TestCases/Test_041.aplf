@@ -1,5 +1,5 @@
  r←Test_041(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip
-⍝ Create a new Zip archive, add some files and then update one of them
+⍝ Create a new Zip archive, add some files and then update one of them by calling `Add` again`
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
 
@@ -16,7 +16,7 @@
  path myZip.Add'src/level-1-b.txt'
 
  (⊂100⍴' ',1⊃⎕SI)F.NPUT(path,'/src/level-1-b.txt')1
- path myZip.Update'/src/level-1-b.txt'
+ path myZip.Add'/src/level-1-b.txt'
 
  myZip.Dispose
  zipFilename ##.DotNetZip.UnzipTo path,'/unzipped'
@@ -26,6 +26,5 @@
  r←T._OK
 
 ∆TidyUp:
- myZip.Dispose
  Assert 0=1⊃F.RmDir path
 ⍝Done

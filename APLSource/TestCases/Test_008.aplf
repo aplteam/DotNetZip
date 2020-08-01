@@ -1,0 +1,29 @@
+ r←Test_008(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list2;path2;path3;list1
+⍝ Zip a single file and a folder, Should preserve the direcotry structure.
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ zipFilename←path,'/MyZipFile'
+ path2←path,'/TestData'
+ F.MkDir path2
+ (⊂'my text file')F.NPUT path2,'/my.txt'
+ path3←path2,'/MyFolder'
+ F.MkDir path3
+ (⊂'my second text file')F.NPUT path3,'/my_2.txt'
+
+ zipFilename←(F.ExpandPath path2)##.DotNetZip.ZipFolder zipFilename
+
+ targetFolder←path,'/Unzipped'
+ F.MkDir targetFolder
+ zipFilename ##.DotNetZip.UnzipTo targetFolder
+
+ list1←(1+≢targetFolder)↓¨⊃('recursive' 1)F.Dir path2,'/'
+ list2←(1+≢targetFolder)↓¨⊃('recursive' 1)F.Dir targetFolder,'/'
+ →T.GoToTidyUp list1≢list2
+
+ r←T._OK
+
+∆TidyUp:
+ Assert 0=1⊃F.RmDir path
+⍝Done

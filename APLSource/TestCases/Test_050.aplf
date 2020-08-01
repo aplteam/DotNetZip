@@ -14,13 +14,9 @@
 
  {}path myZip.Add'src/level-1-a.txt'
 
- (⊂'First')F.NPUT(path,'/src/level-1-a.txt')1
- {}path myZip.Update'/src/level-1-b.txt'
  myZip.Dispose
 
  r←T._OK
 
-∆TidyUp:
- {}myZip.Dispose
  Assert 0=1⊃F.RmDir path
 ⍝Done

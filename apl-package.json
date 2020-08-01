@@ -1,0 +1,1 @@
+{  alias: "",  api: "DotNetZip",  date: "2020-07-04",  description: "Zipping and unzipping with.NET Core on all major platforms",  files: "",  group: "aplteam",  name: "DotNetZip",  project_url: "https://github.com/aplteam/DotNetZip",  source: "APLSource/DotNetZip.aplc",  tags: "aplteam;zip-tools;windows;mac-os;linux",  version: "0.8.0",}

@@ -10,7 +10,6 @@
 ⍝ You can then use these instance methods:
 ⍝ * `Add`
 ⍝ * `Delete`
-⍝ * `Update`
 ⍝ * `List`
 ⍝ * `Dispose`\\
 ⍝ Once instanciated the read-only property `filename` carries the name of the ZIP file.\\
@@ -24,10 +23,13 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.7.0.29' '2020-07-03'
+      r←'DotNetZip' '0.8.0.31' '2020-07-04'
     ∇
 
     ∇ History
+    ⍝ * 0.8.0 from 2020-07-04
+    ⍝   * `Add` is now effectively doing a "Replace" in case the file(s) in question are already part of
+    ⍝     the ZIP. The `Update` method has been removed.
     ⍝ * 0.7.0 from 2020-07-03
     ⍝   * The default for "overwriteFlag" when only a zip filename was passed was 1. Should be 0.
     ⍝ * 0.6.0 from 2020-05-24
@@ -94,11 +96,11 @@
 
     ∇ {r}←{parent}Add toBeZipped;list;isDir
     ⍝ Use this to add one or more files to the ZIP file.\\
-    ⍝ `toBeZipped` specifies the full path (or full paths) of what's going to be zipped. That's what's going to be 
+    ⍝ `toBeZipped` specifies the full path (or full paths) of what's going to be zipped. That's what's going to be
     ⍝ stored in the ZIP file.\\
     ⍝ If `toBeZipped` refers to a full path as in `C:\Foo.txt` or `/tmp/myfile` or, much more likely, refers to
     ⍝ the current directory as in `./foo.txt` then there is no need to specify the optional left argument.\\
-    ⍝ If however you want to store the file `C:\Projects\Foo\docs\ReadMe.txt`, but it should be saved in the ZIP 
+    ⍝ If however you want to store the file `C:\Projects\Foo\docs\ReadMe.txt`, but it should be saved in the ZIP
     ⍝ file as `docs\ReadMe.txt`, then you must call `Add` like this:
     ⍝ ```
     ⍝ `C:\Projects\Foo` myDotNetZip.Add `docs\ReadMe.txt`
@@ -155,25 +157,6 @@
       :EndIf
     ∇
 
-    ∇ {r}←{parent}Update toBeZipped;entry
-    ⍝ Update one ore more files within the ZIP.\\
-    ⍝ `parent` is where what's going to be zipped lives. `path` specifies the path of what's going to be zipped.
-    ⍝ Therefore, `parent,path` gives the full path of the file.\\
-    ⍝ For details on `parent` and `toBeZipped` see the `Add` method.\\
-    ⍝ Returns `⍬` (shy).
-      :Access Public Instance
-      r←⍬
-      parent←{0<⎕NC ⍵:⍎⍵ ⋄ ''}'parent'
-      parent←F.NormalizePath{0=≢⍵:⍵ ⋄ ⍵,(~'/\'∊⍨¯1↑⍵)/F.CurrentSep}parent
-      :If (≡toBeZipped)∊0 1
-          toBeZipped←F.NormalizePath{⍵↓⍨'/\'∊⍨1⍴⍵}toBeZipped
-          parent Update_ toBeZipped
-      :Else
-          toBeZipped←F.NormalizePath∘{⍵↓⍨'/\'∊⍨1⍴⍵}¨toBeZipped
-          parent∘Update_¨toBeZipped
-      :EndIf
-    ∇
-
     ∇ {r}←Dispose
     ⍝ Use this to close the `ZipArchive` instance.\\
     ⍝ Note that deleteting a instance of `DotNetZip` has the same effect as calling this method.
@@ -196,7 +179,7 @@
       :Case 90
           Assert'Cannot access a closed file.'≡⎕EXCEPTION.Message
       :EndTrap
-      ⎕ex '_zip'
+      ⎕EX'_zip'
     ∇
 
     ∇ {r}←zipfile UnzipTo targetFolder
@@ -246,12 +229,8 @@
     ∇
 
     ∇ {r}←parent Add_ toBeZipped
-      r←System.IO.Compression.ZipFileExtensions.CreateEntryFromFile _zip(parent,toBeZipped)toBeZipped
-    ∇
-
-    ∇ {r}←parent Update_ toBeZipped
       Delete toBeZipped
-      parent Add toBeZipped
+      r←System.IO.Compression.ZipFileExtensions.CreateEntryFromFile _zip(parent,toBeZipped)toBeZipped
     ∇
 
       AddExtension←{
@@ -273,4 +252,3 @@
       }
 
 :EndClass
-
