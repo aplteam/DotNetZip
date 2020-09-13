@@ -55,7 +55,8 @@ The instance offers these methods:
 ```
 Add             
 Delete          
-Dispose         
+Dispose 
+ExtractTo
 List            
 Update          
 ```
@@ -63,10 +64,10 @@ Update
 
 ### Processing one or more files
 
-`Add`, `Delete` and `Update` all process these right arguments:
+`Add`, `Delete`, ExtractTo` and `Update` all process these right arguments:
 
 * A simple character vector as a single filename 
-* A vector of text vectors, which is treated as a vector of filenames
+* A vector of text vectors, which is treated as a vector of filenames (and in case of `ExtractTo`, also folder names)
 
 
 ### Relative versus absolute paths with instances
@@ -102,11 +103,11 @@ The obvious disadvantage is that the full path is preserved in the ZIP file, mea
 
 ### Specifying a parent folder
 
-To get around this you can specify a parent folder as left argument, and specify on the right everything what should be preserved, `foo/` in our case:
+To get around this you can specify a parent folder as left argument, and specify on the right everything that should be preserved, `foo/` in our case:
 
 ```
       '/tmp/MyStuff/' myZip.Add 'foo/readme.txt' 
       '/tmp/MyStuff/' myZip.Add 'foo/sub/foo.dll'
 ```
 
-Note that it does not matter whether the left argument carries a trailing separator or not, and that it does not matter whether the right argument(s) carry a leading separator or not: `DotNetZip` works that out.
+Note that it does not matter whether the left argument carries a trailing separator or not, and that it does not matter whether the right argument(s) carry a leading separator or not: `DotNetZip` will work that out.
