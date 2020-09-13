@@ -1,0 +1,31 @@
+ r←Test_049(stopFlag batchFlag);⎕TRAP;path;path2;zipFilename;myZip;res
+⍝ Create a new Zip archive with a nested structure of files, then unzip one sub-dir
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ F.MkDir path,'/src/sub1/sub2/sub3'
+ F.MkDir path,'/unzipped'
+ (⊂'file1')F.NPUT path,'/src/file1.txt'
+ (⊂'file2')F.NPUT path,'/src/sub1/file2.txt'
+ (⊂'file3')F.NPUT path,'/src/sub1/file3.txt'
+ (⊂'file4')F.NPUT path,'/src/sub1/sub2/file2.txt'
+ (⊂'file5')F.NPUT path,'/src/sub1/sub2/file3.txt'
+ (⊂'file6')F.NPUT path,'/src/sub1/sub2/sub3/file2.txt'
+ (⊂'file7')F.NPUT path,'/src/sub1/sub2/sub3/file3.txt'
+ path2←path,'/src'
+
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+ path2 myZip.Add(1+≢path2)↓¨⊃('recursive' 1)F.Dir path,'/src/'
+
+ res←'sub1/sub2'myZip.ExtractTo path,'/unzipped/'
+ →T.GoToTidyUp(,1)≢,res
+ →T.GoToTidyUp(≢⊃('recursive' 1)F.Dir path,'/src/sub1/sub2/')≢≢⊃('recursive' 1)F.Dir path,'/unzipped/sub1/sub2/'
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done

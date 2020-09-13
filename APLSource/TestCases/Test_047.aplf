@@ -1,0 +1,30 @@
+ r←Test_047(stopFlag batchFlag);⎕TRAP;path;zipFilename;myZip;path2;qdmx
+⍝ Create a new Zip archive, add a file and then try to unzip it when there is already such a file. Should throw an error.
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ F.MkDir path,'/src'
+ F.MkDir path,'/unzipped'
+ (⊂'file')F.NPUT path,'/src/file.txt'
+ (⊂'Already there')F.NPUT path,'/unzipped/file.txt'
+ path2←path,'/src'
+
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+ path2 myZip.Add'file.txt'
+
+ :Trap 0
+     'file.txt'myZip.ExtractTo path,'/unzipped'
+     →T.GoToTidyUp 1
+ :Else
+     qdmx←⎕DMX
+     →T.GoToTidyUp 1≠≢'The file ''[^'']+'' already exists.'⎕S 0⊣qdmx.EM
+ :EndTrap
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done

@@ -1,0 +1,29 @@
+ r←Test_048(stopFlag batchFlag);⎕TRAP;path;path2;zipFilename;myZip;res
+⍝ Create a new Zip archive, add three files, two in a sub-dir,  and then unzip the sub-dir
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ F.MkDir path,'/src/sub'
+ F.MkDir path,'/unzipped'
+ (⊂'file1')F.NPUT path,'/src/file1.txt'
+ (⊂'file2')F.NPUT path,'/src/sub/file2.txt'
+ (⊂'file3')F.NPUT path,'/src/sub/file3.txt'
+ path2←path,'/src'
+
+ zipFilename←path,'/MyZipFile.zip'
+ myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
+ path2 myZip.Add'file1.txt' 'sub/file2.txt' 'sub/file3.txt'
+
+ res←'sub'myZip.ExtractTo path,'/unzipped/'
+ →T.GoToTidyUp(,1)≢,res
+ →T.GoToTidyUp'file2'≢⎕TC~⍨⊃F.NGET path,'/unzipped/sub/file2.txt'
+ →T.GoToTidyUp'file3'≢⎕TC~⍨⊃F.NGET path,'/unzipped/sub/file3.txt'
+ →T.GoToTidyUp 2≠≢⊃F.Dir path,'/unzipped/sub/'
+
+ r←T._OK
+
+∆TidyUp:
+ myZip.Dispose
+ Assert 0=1⊃F.RmDir path
+⍝Done

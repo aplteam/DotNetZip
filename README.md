@@ -3,7 +3,7 @@
 
 ## Overview
 
-The `DotNetZip` class allows one to zip and unzip files with .NET Core on all major platforms: Windows, Linux and Max OS.
+The `DotNetZip` class allows one to zip and unzip files with .NET Core on all major platforms: Windows, Linux and Mac OS.
 
 Note that although .NET Core is required on Linux and Mac OS, under Windows it also works with .NET rather than .Net Core.
 
@@ -12,7 +12,7 @@ Note that although .NET Core is required on Linux and Mac OS, under Windows it a
 
 Dyalog APL: 
 
-* Under Windows DotNetZip runs under 16.0 and later
+* Under Windows DotNetZip runs under 17.0 and later
 * Under Linux and MacOS .NET Core is required which is supported only by Dyalog 18.0 and later
 
 .NET: 
@@ -32,7 +32,7 @@ There are three shared methods available:
 
 The names should tell the whole story.
 
-Note that when you specify a path like `C:\Temp\Foo` and that folder contains:
+Note that when you pass a path like `C:\Temp\Foo` to `ZipFolder` and that folder contains:
 
 ```
 readme.txt
@@ -44,7 +44,7 @@ then the files in the ZIP files carry only the names `readme.txt` and `sub/foo.d
 
 ## Using instance methods
 
-First you need to create an instance:
+First you need to create an instance. The constructor requires the name of the ZIP file to be created (if it does not exists yet) or altered (in case it already exists):
 
 ```
  myZip←DotNetZip (,⊂'C:\Temp\MyZip')
@@ -63,10 +63,10 @@ Update
 
 ### Processing one or more files
 
-`Add`, `Delete` and `Update` all process a right argument...
+`Add`, `Delete` and `Update` all process these right arguments:
 
-* a simple character vector as a single filename 
-* a vector of text vectors is treated as a vector of filenames
+* A simple character vector as a single filename 
+* A vector of text vectors, which is treated as a vector of filenames
 
 
 ### Relative versus absolute paths with instances
@@ -90,7 +90,7 @@ When the folder `foo` lives in your current directory then, assuming that your i
 
 #### Use an absolute path and preserve it
 
-When the folder `foo` lives in `tmp/MyStuff/` then you could use this:
+When the folder `foo` lives in `/tmp/MyStuff/` then you could use this:
 
 ```
       myZip.Add '/tmp/MyStuff/foo/readme.txt' 
