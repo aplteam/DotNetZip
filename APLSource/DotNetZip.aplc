@@ -23,12 +23,14 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.9.0.39' '2020-09-12'
+      r←'DotNetZip' '0.9.1.42' '2020-09-13'
     ∇
 
     ∇ History
+    ⍝ * 0.9.1 from 2020-09-13
+    ⍝   * Workaround regarding nonsense VALUE ERRORs on `System` extended
     ⍝ * 0.9.0 from 2020-09-12
-    ⍝   Instance method `ExtractTo` added.
+    ⍝   * Instance method `ExtractTo` added
     ⍝ * 0.8.2 from 2020-08-12
     ⍝   * `⎕NEW` replaced by a function `QuadNEW` which tries again for a while with increasing dealys.
     ⍝     This is required because sometimes .NET generates and error "being used by another process"
@@ -85,6 +87,7 @@
       CheckMinVersion ⍬
       Initialize ⍬
       zipFilename←AddExtension F.ExpandPath zipFilename
+      QEX_System
       :If F.Exists zipFilename
       :AndIf 0=overwriteFlag
           stream←System.IO.File.Open(zipFilename System.IO.FileMode.Open)
@@ -164,9 +167,10 @@
       :For i :In ⍳≢names
           name←F.NormalizePath i⊃names
           :If ⎕NULL≢entry←_zip.GetEntry⊂name
-            targetFilename←F.NormalizePath folder,'/',name
+              targetFilename←F.NormalizePath folder,'/',name
               :Trap 90
                   'Create!'F.CheckPath 1⊃⎕NPARTS targetFilename
+                  QEX_System
                   System.IO.Compression.ZipFileExtensions.ExtractToFile(entry targetFilename)
                   r[i]←1
               :Else
@@ -233,6 +237,7 @@
     ⍝ `targetFolder` must not yet exist.
       :Access Public Shared
       r←Initialize ⍬
+      QEX_System
       :Trap 6
           System.IO.Compression.ZipFile.ExtractToDirectory zipfile targetFolder
       :Else
@@ -252,6 +257,7 @@
       Initialize ⍬
       targetFile←F.ExpandPath AddExtension targetFile
       sourceFolder←F.ExpandPath sourceFolder
+      QEX_System
       System.IO.Compression.ZipFile.CreateFromDirectory sourceFolder targetFile
     ⍝Done
     ∇
@@ -308,6 +314,7 @@
 
     ∇ {r}←parent Add_ toBeZipped
       Delete toBeZipped
+      QEX_System
       r←System.IO.Compression.ZipFileExtensions.CreateEntryFromFile _zip(parent,toBeZipped)toBeZipped
     ∇
 
@@ -328,5 +335,12 @@
           IfAtLeastVersion 17:shy←1
           'This class requires at least version 17.0 of Dyalog APL'⎕SIGNAL 11
       }
+
+    ∇ QEX_System
+      ⍝ Workaround for bug Mantis 18404 from 2020-08
+      ⍝ The VALUE ERROR is not really a VALUE ERROR. This appears to happen only when `DotNetZip` is instanciated
+      ⍝ within `⎕SE`, the )CLEAR is issed and then again `DotNetZip` instanciated within `⎕SE`.
+      ⎕EX'System'
+    ∇
 
 :EndClass
