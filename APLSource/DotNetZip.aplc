@@ -23,34 +23,12 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '0.9.1.42' '2020-09-13'
+      r←'DotNetZip' '1.0.0.43' '2020-09-21'
     ∇
 
     ∇ History
-    ⍝ * 0.9.1 from 2020-09-13
-    ⍝   * Workaround regarding nonsense VALUE ERRORs on `System` extended
-    ⍝ * 0.9.0 from 2020-09-12
-    ⍝   * Instance method `ExtractTo` added
-    ⍝ * 0.8.2 from 2020-08-12
-    ⍝   * `⎕NEW` replaced by a function `QuadNEW` which tries again for a while with increasing dealys.
-    ⍝     This is required because sometimes .NET generates and error "being used by another process"
-    ⍝     though that was caused by `DotNetZip` itself.
-    ⍝ * 0.8.1 from 2020-08-07
-    ⍝   * Workaround implemented for bug with ⎕USING that caused a nonsense VALUE ERROR. (Mantis 18404)\\
-    ⍝     The bugs makes an appearance when the class is instanciated in ⎕SE, then a )CLEAR command is issued
-    ⍝     and then again instantiated: you get a VALUE ERROR on a .NET function that is there, at least a bit.
-    ⍝ * 0.8.0 from 2020-07-04
-    ⍝   * `Add` is now effectively doing a "Replace" in case the file(s) in question are already part of
-    ⍝     the ZIP. The `Update` method has been removed.
-    ⍝ * 0.7.0 from 2020-07-03
-    ⍝   * The default for "overwriteFlag" when only a zip filename was passed was 1. Should be 0.
-    ⍝ * 0.6.0 from 2020-05-24
-    ⍝   * `Add` now accepts and processes folders as well as files
-    ⍝   * Documentation improved
-    ⍝ * 0.5.1 from 2020-05-12
-    ⍝   * Minor bug fix in `ZipFolder`
-    ⍝ * 0.5.0 from 2020-05-09
-    ⍝   * First version published on GitHub as beta
+    ⍝ * 1.0.0 from 2020-09-21
+    ⍝   * First official release. Requires Dyalog 18.0 and is delivered as a Tatin package
     ∇
 
     :Property  filename
@@ -290,9 +268,7 @@
               :EndIf
           :EndTrap
       :Until success∨10<counter
-      :If 10<counter
-          ('⎕NEW failed ',(⍕counter),' times')⎕SIGNAL 11
-      :EndIf
+      ('⎕NEW failed ',(⍕counter),' times')⎕SIGNAL 11/⍨10<counter
     ∇
 
     ∇ {r}←Initialize dummy;notwindows;netcoreset
