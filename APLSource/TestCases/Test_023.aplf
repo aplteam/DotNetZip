@@ -12,7 +12,7 @@
  list←myZip.List
 
  expected←F.NormalizePath'TestData\level-1-a.txt' 'level-1-b.txt'
- →T.GoToTidyUp list≢expected
+ →T.GoToTidyUp≢/{F.EnforceSlash¨⍵}¨list expected
 
  r←T._OK
 

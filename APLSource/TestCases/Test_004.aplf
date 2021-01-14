@@ -15,7 +15,7 @@
 
  myZip←⎕NEW ##.DotNetZip(zipFilename 0)
  myZip.Add 1↓list                   ⍝ Now all the other files
- →T.GoToTidyUp list≢myZip.List
+ →T.GoToTidyUp≢/{F.EnforceSlash¨⍵}¨list myZip.List
 
  list2←myZip.List
  →T.GoToTidyUp 0=≢list2

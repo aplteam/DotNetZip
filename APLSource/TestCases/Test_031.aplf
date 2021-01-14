@@ -1,4 +1,4 @@
- r←Test_031(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1;without
+ r←Test_031(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1;without1;without2
 ⍝ Create a new Zip archive, add some files and then delete some of them
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
@@ -15,13 +15,16 @@
  myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
  list1←myZip.List
 
- myZip.Delete'./TestData\level-1-a.txt'
- myZip.Delete'./TestData/sub-1/sub-1-level-2-b.txt' './TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
- myZip.Delete'DOES-NOT-EXIST'
- list2←myZip.List
+ without1←⊂'./TestData\level-1-a.txt'
+ myZip.Delete without1
 
- without←F.NormalizePath'./TestData\level-1-a.txt' './TestData/sub-1/sub-1-level-2-b.txt' './TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
- →T.GoToTidyUp list2≢list1~without
+ without2←'./TestData/sub-1/sub-1-level-2-b.txt' './TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ myZip.Delete without2
+
+ myZip.Delete'DOES-NOT-EXIST'
+ list2←F.EnforceSlash¨myZip.List
+
+ →T.GoToTidyUp≢/list2(list1~without1,without2)
 
  r←T._OK
 

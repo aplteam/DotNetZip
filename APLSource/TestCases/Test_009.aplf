@@ -1,0 +1,21 @@
+ r←Test_009(stopFlag batchFlag);⎕TRAP;path;zipFilename;myZip1;myZip2;qdmx
+⍝ Create a ZIP file and then tries to instantiate DotNetZip again on that very ZIP file
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ path←∆GetTestFolderInTemp 1⊃⎕SI
+ zipFilename←path,'/MyZipFile.zip'
+ myZip1←⎕NEW ##.DotNetZip(,⊂zipFilename)
+ :Trap 99
+     myZip2←⎕NEW ##.DotNetZip(,⊂zipFilename)
+     →T.GoToTidyUp 1
+ :Else
+     qdmx←⎕DMX
+     →T.GoToTidyUp'The process cannot access the file'{⍺≢(≢⍺)↑⍵}qdmx.EM
+ :EndTrap
+
+∆TidyUp:
+ myZip1.Dispose
+ :Trap 0 ⋄ myZip2.Dispose ⋄ :EndTrap
+ Assert 0=1⊃F.RmDir path
+⍝Done
