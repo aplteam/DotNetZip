@@ -1,5 +1,5 @@
  r←Test_008(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;list2;path2;path3;list1
-⍝ Zip a single file and a folder, Should preserve the direcotry structure.
+⍝ Zip a single file and a folder, Should preserve the directory structure.
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
 
