@@ -1,5 +1,5 @@
 :Class DotNetZip
-⍝ Zipping and unzipping with .NET Core on Windows, Linux and Mac-OS.\\
+⍝ Zipping and unzipping with .NET(Core) on Windows, Linux and Mac-OS.\\
 ⍝ This class offers three shared methods:
 ⍝ * `ZipFolder`
 ⍝ * `UnzipTo`
@@ -23,12 +23,18 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '1.0.2+59' '2021-03-01'
+      r←'DotNetZip' '2.0.0+59' '2022-05-18'
     ∇
 
     ∇ History
+      :Access Public Shared
+    ⍝ * 2.0.0 from 2022-05-18
+    ⍝   * The constructor now checks whether .NET(core) is really available, and throws an error
+    ⍝     if it is not.  
+    ⍝   * Documentation polished.         
+    ⍝   * Now managed by Cider rather than acre.
     ⍝ * 1.0.2 from 2021-03-01
-    ⍝   * Problem with backslash as separated fixed
+    ⍝   * Problem with backslash as separator fixed
     ⍝   * Package config corrected
     ⍝ * 1.0.1 from 2021-01-10
     ⍝   * Paths are written to a ZIP file with / rather than \, no matter what the platform is.
@@ -43,6 +49,7 @@
 
     :Property  filename
     :Access Public Instance
+    ⍝ The name of the ZIP file
         ∇ r←Get
           r←_filename
         ∇
@@ -61,7 +68,7 @@
     ∇ make2(zipFilename overwriteFlag)
     ⍝ Constructor that takes two arguments:
     ⍝ * the name of the ZIP file
-    ⍝ * Boolean for `overwriteFlag`
+    ⍝ * Boolean for `overwriteFlag`\\
     ⍝ `overwriteFlag` defaults to 1. If `overwriteFlag` is 0 and there is already a ZIP file with that
     ⍝ name it is not overwritten but opened.
       :Access Public Instance
@@ -153,12 +160,11 @@
     ∇ r←names ExtractTo folder;name;entry;writer;buff;zip;stream;rc;i;targetFilename;list;sep
     ⍝ `names` is the name of one or more zipped objects (files or directories).
     ⍝ Those will be extracted into `folder\`.\\
-    ⍝ `names` may be simple (single object) or nested (vector of objects).\\         
+    ⍝ `names` may be simple (single object) or nested (vector of objects).\\
     ⍝ There must be no file or folder of the given name in the target folder, otherwise an error is thrown.\\
-    ⍝ `r` is a vector of Booleans with the same lengths as `names, carrying 1 for success and 0  otherwise,
-    ⍝ However, if `names` is or contains the name of a folder the lenght of `r` may be smaller than the
-    ⍝ number of files and folders extracted. Note that in such a case will result in a 0 in case a single
-    ⍝ file or folder cannot be extracted.\\
+    ⍝ `r` is a vector of Booleans with the same lengths as `names`, carrying 1 for success and 0  otherwise.
+    ⍝ However, if `names` is or contains the name of a folder, the length of `r` may be smaller than the
+    ⍝ number of files and folders extracted.
     ⍝ A typical reason for a failure is that a given file or folder does not exist in the ZIP file.
       :Access Public Instance
       names←,⊆names
@@ -188,7 +194,7 @@
     ∇
 
     ∇ r←List;collection
-    ⍝ Lists the contents of the ZIP file
+    ⍝ Lists the contents of the ZIP file.
       :Access Public Instance
       collection←⌷_zip.Entries
       r←collection.ToString
@@ -240,8 +246,8 @@
           System.IO.Compression.ZipFile.ExtractToDirectory zipfile targetFolder
       :Else
           ⍝ Workaround for bug Mantis 18404 from 2020-08
-          ⍝ The VALUE ERROR is not really a VALUE ERROR. This appears to happen only when `DotNetZip` is instanciated
-          ⍝ within `⎕SE`, the )CLEAR is issed and then again `DotNetZip` instanciated within `⎕SE`.
+          ⍝ The VALUE ERROR is not really a VALUE ERROR. This appears to happen only when `DotNetZip` is
+          ⍝ instanciated within `⎕SE`, then )CLEAR is issed and then `DotNetZip` is again instanciated within `⎕SE`.
           ⎕EX'System'
           System.IO.Compression.ZipFile.ExtractToDirectory zipfile targetFolder
       :EndTrap
@@ -251,8 +257,9 @@
     ∇ {zipFilename}←sourceFolder ZipFolder zipFilename;fileList;myZip;F;∆INIT;b
     ⍝ Takes a folder and zips it. `zipFilename` must not exist.\\
     ⍝ Returns the fully expanded name of `zipFilename`.\\
-    ⍝ This is a workaround thats gets around the \-problem on Linux and Mac-OS.
-    ⍝ The "real" solution is named `ZipFolder_` and can be brought back once Microsoft fixes the probem.
+    ⍝ This is a workaround thats gets around the `\` problem on Linux and Mac-OS.\\
+    ⍝ The "real" solution is available under the name `ZipFolder_` and can be brought back once Microsoft fixes the
+    ⍝ probem, which means probably not in the foreseeable future.
       :Access Public Shared
       ∆INIT←0
       Initialize ⍬
@@ -282,7 +289,7 @@
 
     ∇ r←ListZipContents zipfile;myZip
       :Access Public Shared
-    ⍝ Helper that instantiates the `DotNetZip` class just for the purpose of unzipping a zip file.
+    ⍝ Helper that instantiates the `DotNetZip` class temporarily just for the purpose of unzipping a zip file.
       myZip←QuadNEW ⎕THIS(zipfile 0)
       r←myZip.List
     ∇
