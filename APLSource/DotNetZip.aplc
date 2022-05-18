@@ -23,7 +23,7 @@
 
     ∇ r←Version
       :Access Public Shared
-      r←'DotNetZip' '2.0.0+59' '2022-05-18'
+      r←'DotNetZip' '2.0.0+61' '2022-05-18'
     ∇
 
     ∇ History
