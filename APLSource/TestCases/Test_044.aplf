@@ -7,8 +7,8 @@
  path←∆GetTestFolderInTemp 1⊃⎕SI
  F.MkDir path,'/src'
  F.MkDir path,'/unzipped'
- (path,'/src/')⎕NCOPY F.ExpandPath'./TestData\level-1-a.txt'
- (path,'/src/')⎕NCOPY F.ExpandPath'./TestData\level-1-b.txt'
+ (path,'/src/')⎕NCOPY F.ExpandPath ##.CiderConfig.HOME, '/TestData\level-1-a.txt'
+ (path,'/src/')⎕NCOPY F.ExpandPath ##.CiderConfig.HOME,'/TestData\level-1-b.txt'
  F.MkDir src2←path,'/src/subfolder1/subfolder2'
  (⊂'Blabla')F.NPUT src2,'/my.txt'
  path2←path,'/src'

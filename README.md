@@ -12,15 +12,16 @@ Note that although .NET Core is required on Linux and Mac OS, under Windows it a
 
 Dyalog APL: 
 
-* Under Windows DotNetZip runs under 17.0 and later
+* Under Windows `DotNetZip` runs under 17.0 and later
 * Under Linux and MacOS .NET Core is required which is supported only by Dyalog 18.0 and later
 
 .NET: 
 
-* Under Windows any modern version of .NET **_or_** .NET Core 3.1 (or better) is required
+* Under Windows any modern version of .NET **_or_** .NET Core 3.1 is required
 
-* On non-Windows platforms .NET Core 3.1 (or better) is required
+* On non-Windows platforms .NET Core 3.1 is required
 
+Look at [ZipArchive](https://github.com/aplteam/ZipArchive) for a ZIP tool that does not require .NET on non-Windows platforms.
 
 ## Using shared methods
 
@@ -39,12 +40,12 @@ readme.txt
 sub/foo.dll
 ```
 
-then the files in the ZIP files carry only the names `readme.txt` and `sub/foo.dll` rather than the full path.
+then the files in the ZIP carry only the names `readme.txt` and `sub/foo.dll` rather than the full path.
 
 
 ## Using instance methods
 
-First you need to create an instance. The constructor requires the name of the ZIP file to be created (if it does not exists yet) or altered (in case it already exists):
+First you need to create an instance. The constructor requires the name of the ZIP file to be created (if it does not exists yet) or, in case it already exists, replaced or altered:
 
 ```
  myZip←DotNetZip (,⊂'C:\Temp\MyZip')
@@ -58,16 +59,12 @@ Delete
 Dispose 
 ExtractTo
 List            
-Update          
 ```
 
 
 ### Processing one or more files
 
-`Add`, `Delete`, ExtractTo` and `Update` all process these right arguments:
-
-* A simple character vector as a single filename 
-* A vector of text vectors, which is treated as a vector of filenames (and in case of `ExtractTo`, also folder names)
+`Add` as well as `Delete` can process one or multiple filenames and folder names.
 
 
 ### Relative versus absolute paths with instances

@@ -7,22 +7,17 @@
  zipFilename←path,'/MyZipFile.zip'
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
- myZip.Add'./TestData\level-1-a.txt'
- myZip.Add'./TestData\level-1-b.txt'
- myZip.Add'./TestData/sub-1/sub-1-level-2-a.txt'
- myZip.Add'./TestData/sub-1/sub-1-level-2-b.txt'
- myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
- myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ list1←F.ListFiles'./'
+ myZip.Add list1
  myZip.Dispose
-
- list1←2↓¨⊃('recursive' 1)F.Dir'./TestData/'
 
  path2←path,'/unzipped'
  F.MkDir path
  zipFilename ##.DotNetZip.UnzipTo path2
- list2←(1+≢path2)↓¨1↓⊃('recursive' 1)F.Dir path2,'/'
+ list2←⊃('recursive' 1)F.Dir path2,'/'
+ list2←(1+≢path2)↓¨list2
 
- →T.GoToTidyUp list1≢list2
+ →T.GoToTidyUp (2↓¨list1)≢list2
 
  r←T._OK
 

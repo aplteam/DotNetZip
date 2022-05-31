@@ -1,4 +1,4 @@
- r←Test_031(stopFlag batchFlag);⎕TRAP;path;zipFilename;targetFolder;myZip;list2;this;list1;without1;without2
+ r←Test_031(stopFlag batchFlag);list1;list2;myZip;path;targetFolder;this;without1;without2;without3;zipFilename;⎕TRAP
 ⍝ Create a new Zip archive, add some files and then delete some of them
  ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
  r←T._Failed
@@ -7,24 +7,28 @@
  zipFilename←path,'/MyZipFile.zip'
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
- myZip.Add'./TestData\level-1-a.txt'
- myZip.Add'./TestData\level-1-b.txt'
- myZip.Add'./TestData/sub-1/sub-1-level-2-a.txt'
- myZip.Add'./TestData/sub-1/sub-1-level-2-b.txt'
- myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
- myZip.Add'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
- list1←myZip.List
+ ##.CiderConfig.HOME myZip.Add'TestData\file with spaces'
+ ##.CiderConfig.HOME myZip.Add'TestData\level-1-a.txt'
+ ##.CiderConfig.HOME myZip.Add'TestData\level-1-b.txt'
+ ##.CiderConfig.HOME myZip.Add'TestData/sub-1/sub-1-level-2-a.txt'
+ ##.CiderConfig.HOME myZip.Add'TestData/sub-1/sub-1-level-2-b.txt'
+ ##.CiderConfig.HOME myZip.Add'TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
+ ##.CiderConfig.HOME myZip.Add'TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ list1←F.NormalizePath myZip.List
 
- without1←⊂'./TestData\level-1-a.txt'
+ without1←'TestData/file with spaces'
  myZip.Delete without1
 
- without2←'./TestData/sub-1/sub-1-level-2-b.txt' './TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ without2←⊂'TestData\level-1-a.txt'
  myZip.Delete without2
 
- myZip.Delete'DOES-NOT-EXIST'
- list2←F.EnforceSlash¨myZip.List
+ without3←'TestData/sub-1/sub-1-level-2-b.txt' 'TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ myZip.Delete without3
 
- →T.GoToTidyUp≢/list2(list1~without1,without2)
+ myZip.Delete'DOES-NOT-EXIST'
+ list2←F.NormalizePath ¨myZip.List
+
+ →T.GoToTidyUp≢/list2(list1~F.NormalizePath (⊂without1),without2,without3)
 
  r←T._OK
 

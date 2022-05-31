@@ -8,18 +8,19 @@
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
  list←''
- list,←⊂'./TestData\level-1-a.txt'
- list,←⊂'./TestData\level-1-b.txt'
- list,←⊂'./TestData/sub-1/sub-1-level-2-a.txt'
- list,←⊂'./TestData/sub-1/sub-1-level-2-b.txt'
- list,←⊂'./TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
- list,←⊂'./TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData\level-1-a.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData\level-1-b.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData\file with spaces'
+ list,←⊂##.CiderConfig.HOME,'/TestData/sub-1/sub-1-level-2-a.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData/sub-1/sub-1-level-2-b.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData/sub-2/sub-2-1/sub-2-1-level-3-a.txt'
+ list,←⊂##.CiderConfig.HOME,'/TestData/sub-2/sub-2-1/sub-2-1-level-3-b.txt'
  myZip.Add list
  list1←myZip.List
 
- list2←⊃('recursive' 1)F.Dir'./TestData/'
+ list2←⊃('recursive' 1)F.Dir ##.CiderConfig.HOME,'/TestData/'
  list2/⍨←F.IsFile list2
- →T.GoToTidyUp≢/F.NormalizePath¨list1 list2
+ →T.GoToTidyUp~∆LayMatch/F.NormalizePath¨list1 list2
  myZip.Dispose
  fileSize←{size←⎕NSIZE ⍵ ⋄ _←⎕NUNTIE ⍵ ⋄ size}zipFilename ⎕NTIE 0
  →T.GoToTidyUp 100>fileSize
