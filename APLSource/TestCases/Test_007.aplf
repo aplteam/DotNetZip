@@ -5,7 +5,7 @@
 
  path←∆GetTestFolderInTemp 1⊃⎕SI
  zipFilename←path,'/MyZipFile'
- zipFilename←(F.ExpandPath'./TestData')##.DotNetZip.ZipFolder zipFilename
+ zipFilename←(F.ExpandPath './TestData')##.DotNetZip.ZipFolder zipFilename
  list1←{(≢⍵)↓¨⊃('recursive' 1)F.Dir ⍵}'./TestData/'
 
  targetFolder←path,'/Unzipped'

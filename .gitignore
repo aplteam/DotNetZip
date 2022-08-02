@@ -1,5 +1,5 @@
 aplcore
 /Dist/
-/conga.crash
-CONTINUE.DWS
-.gitignore
+CONTINUE.dws
+/TestResults/
+conga.crash

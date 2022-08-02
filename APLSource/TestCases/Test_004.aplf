@@ -7,7 +7,7 @@
  zipFilename←path,'/MyZipFile.zip'
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
- list←⊃('recursive' 1)F.Dir'./TestData/'
+ list←⊃('recursive' 1)F.Dir './TestData/'
  list/⍨←F.IsFile list
 
  myZip.Add 1↑list                   ⍝ That's right, only the first one here
