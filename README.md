@@ -5,8 +5,9 @@
 
 The `DotNetZip` class allows one to zip and unzip files with .NET Core on all major platforms: Windows, Linux and Mac OS.
 
-Note that although .NET Core is required on Linux and Mac OS, under Windows it also works with .NET rather than .Net Core.
+Although .NET Core is required on Linux and Mac OS, under Windows it also works with .NET rather than .Net Core.
 
+**Note:** `DotNetZip` releases are published as [Tatin](https://tatin.dev "Link to the principal Tatin Registry") packages, see there.
 
 ## Requirements
 
