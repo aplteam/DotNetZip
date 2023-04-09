@@ -1,12 +1,12 @@
- Make flag;C;M;path;cfg;version;zipFilename
+Make flag;M;C;path;zipFilename;res;version;cfg
  :If flag
-     C←##.CiderConfig ⋄ M←⎕SE.MakeHelpers
+     M←⎕SE.MakeHelpers
+     C←##.CiderConfig
      path←C.HOME,'/Dist/'
-     {}##.FilesAndDirs.RmDirByForce path
-     ##.FilesAndDirs.MkDir path
-     cfg←M.GetPackageCfg C.HOME
-     version←cfg M.HandleVersionNumber path
+     cfg←⎕JSON⍠('Dialect' 'JSON5')⊢⊃##.FilesAndDirs.NGET C.HOME,'/apl-package.json'
+     version←M.CompileVersionNumberPattern cfg
+     M.RecreateFolder path
      zipFilename←⎕SE.Tatin.BuildPackage C.HOME path version
-     ⎕←'*** New version build successfully:',(⎕UCS 13),'   ',zipFilename
+     ⎕←'*** New version build successfully:',M.CR,'   ',zipFilename
  :EndIf
  ⍝Done
