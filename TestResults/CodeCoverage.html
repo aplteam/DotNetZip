@@ -127,10 +127,10 @@ ul li, ol li {margin: 8pt 3pt;}
 <tr><th>Executed at</th><th>APLVersion</th><th>Memory (MB)</th></tr>
 </thead>
 <tbody>
-<tr><td>2025-04-03 16:00:39</td><td>Windows-64 ⋄ 19.0.50771.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>114</td></tr>
+<tr><td>2025-04-03 16:58:38</td><td>Windows-64 ⋄ 19.0.50771.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>114</td></tr>
 </tbody>
 </table>
-<p>Overall 83% of the testable code is covered.</p>
+<p>Overall 85% of the testable code is covered.</p>
 <p>(Comment lines, empty lines, all <code>:End</code>* lines etc. are ignored)</p>
 <p>14 of the fns/opr are 100% covered.</p>
 <div id="partly-covered" class="keep-together">
@@ -139,9 +139,9 @@ ul li, ol li {margin: 8pt 3pt;}
 <tr><th style="text-align:left;">Function/Operator</th><th style="text-align:left;">Lines not executed</th><th style="text-align:left;">Coverage</th><th style="text-align:right;">≢</th></tr>
 </thead>
 <tbody>
-<tr class="uncovered"><td><a href="#listing_1" title="Link to listing">#.DotNetZip.DotNetZip.Version</a></td><td>5←≢4-7,11</td><td>0</td><td>5</td></tr>
-<tr class="uncovered"><td><a href="#listing_2" title="Link to listing">#.DotNetZip.DotNetZip.ZipFolder_</a></td><td>5←≢4-8</td><td>0</td><td>5</td></tr>
-<tr><td><a href="#listing_3" title="Link to listing">#.DotNetZip.DotNetZip.QuadNEW</a></td><td>5←≢10-13,15</td><td>58</td><td>12</td></tr>
+<tr class="uncovered"><td><a href="#listing_1" title="Link to listing">#.DotNetZip.DotNetZip.ZipFolder_</a></td><td>5←≢4-8</td><td>0</td><td>5</td></tr>
+<tr><td><a href="#listing_2" title="Link to listing">#.DotNetZip.DotNetZip.QuadNEW</a></td><td>5←≢10-13,15</td><td>58</td><td>12</td></tr>
+<tr><td><a href="#listing_3" title="Link to listing">#.DotNetZip.DotNetZip.Version</a></td><td>5, 11</td><td>60</td><td>5</td></tr>
 <tr><td><a href="#listing_4" title="Link to listing">#.DotNetZip.DotNetZip.UnzipTo</a></td><td>12, 13</td><td>67</td><td>6</td></tr>
 <tr><td><a href="#listing_5" title="Link to listing">#.DotNetZip.DotNetZip.Cleanup</a></td><td>6</td><td>80</td><td>5</td></tr>
 <tr><td><a href="#listing_6" title="Link to listing">#.DotNetZip.DotNetZip.make</a></td><td>7←≢30-31,39-41,43-44</td><td>81</td><td>36</td></tr>
@@ -185,7 +185,7 @@ $(document).ready(function() {
         },      
         buttons: [
         {
-            text: "Partly covered (6)",
+            text: "Partly covered (7)",
             titleAttr: "50%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -199,7 +199,7 @@ $(document).ready(function() {
             }
         },
         {
-            text: "Uncovered (2)",
+            text: "Uncovered (1)",
             titleAttr: "0%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -258,22 +258,7 @@ $(document).ready(function() {
 } );    
 </script>
 <h2>Listings</h2>
-<code class="header" id="listing_1">#.DotNetZip.DotNetZip.Version &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
-<div class="code-block"><code>  r←Version</code>
-<code> [1]      ⍝ Returns the version number from `TatinVars` if possible.</code>
-<code> [2]      ⍝ See also `History`</code>
-<code> [3]   :Access Public Shared</code>
-<code class="emphasize">→[4]   :If 0&lt;⎕NC'TatinVars.CONFIG'</code>
-<code class="emphasize">→[5]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version</code>
-<code class="emphasize">→[6]   :ElseIf 0&lt;##.⎕NC'TatinVars.CONFIG'</code>
-<code class="emphasize">→[7]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version</code>
-<code> [8]   :Else</code>
-<code> [9]      ⍝ When a script was not loaded with Tatin, there will be no namespace `TatinVars`.</code>
-<code> [10]     ⍝ In such cases we cannot provide a version number, so we return just ''.</code>
-<code class="emphasize">→[11]      r←''</code>
-<code> [12]  :EndIf</code>
-</div>
-<code class="header" id="listing_2">#.DotNetZip.DotNetZip.ZipFolder_ &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<code class="header" id="listing_1">#.DotNetZip.DotNetZip.ZipFolder_ &mdash; 0%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
 <div class="code-block"><code>  {targetFile}←sourceFolder ZipFolder_ targetFile</code>
 <code> [1]      ⍝ Takes a folder and zips it. `target` must not exist.\\</code>
 <code> [2]      ⍝ Returns the fully expanded name of the `targetFile`.</code>
@@ -285,7 +270,7 @@ $(document).ready(function() {
 <code class="emphasize">→[8]   System.IO.Compression.ZipFile.CreateFromDirectory sourceFolder targetFile</code>
 <code> [9]      ⍝Done</code>
 </div>
-<code class="header" id="listing_3">#.DotNetZip.DotNetZip.QuadNEW &mdash; 58%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<code class="header" id="listing_2">#.DotNetZip.DotNetZip.QuadNEW &mdash; 58%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
 <div class="code-block"><code>  r←QuadNEW arg</code>
 <code> [1]      ⍝ Attempts to be successful several times in case of "being used by another process" errors with</code>
 <code> [2]      ⍝ increasingly long delays. This often occured when `DotNetZip` itself had just dealt with the zip file,</code>
@@ -306,6 +291,21 @@ $(document).ready(function() {
 <code> [17]      :EndTrap</code>
 <code> [18]  :Until success∨10&lt;counter</code>
 <code> [19]  ('⎕NEW failed ',(⍕counter),' times')⎕SIGNAL 11/⍨10&lt;counter</code>
+</div>
+<code class="header" id="listing_3">#.DotNetZip.DotNetZip.Version &mdash; 60%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
+<div class="code-block"><code>  r←Version</code>
+<code> [1]      ⍝ Returns the version number from `TatinVars` if possible.</code>
+<code> [2]      ⍝ See also `History`</code>
+<code> [3]   :Access Public Shared</code>
+<code> [4]   :If 0&lt;⎕NC'TatinVars.CONFIG'</code>
+<code class="emphasize">→[5]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version</code>
+<code> [6]   :ElseIf 0&lt;##.⎕NC'TatinVars.CONFIG'</code>
+<code> [7]       r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version</code>
+<code> [8]   :Else</code>
+<code> [9]      ⍝ When a script was not loaded with Tatin, there will be no namespace `TatinVars`.</code>
+<code> [10]     ⍝ In such cases we cannot provide a version number, so we return just ''.</code>
+<code class="emphasize">→[11]      r←''</code>
+<code> [12]  :EndIf</code>
 </div>
 <code class="header" id="listing_4">#.DotNetZip.DotNetZip.UnzipTo &mdash; 67%<a class="float-right no-print no-underline top-links" href="#top" title="Go to the top of the document">&#8607;</a><a  class="float-right no-print no-underline top-links" href="#partly-covered" title="Go to the beginning of 'Partly-covered'">↑</a></code>
 <div class="code-block"><code>  {r}←zipfile UnzipTo targetFolder</code>
