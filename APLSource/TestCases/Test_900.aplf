@@ -1,0 +1,12 @@
+ r←Test_900(stopFlag batchFlag);⎕TRAP;res
+⍝ Exercise the `Version` function
+ ⎕TRAP←(999 'C' '∘∘∘ ⍝ Deliberate error')(0 'N')
+ r←T._Failed
+
+ res←##.DotNetZip.Version
+ →T.PassesIf 1=≡res
+ →T.PassesIf' '=1↑0⍴res
+ →T.PassesIf∧/⎕D∊⍨{⍵↑⍨¯1+⌊/⍵⍳'+-'}res~' .'
+
+ r←T._OK
+⍝Done

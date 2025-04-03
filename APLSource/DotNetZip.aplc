@@ -22,20 +22,31 @@
     ∆INIT←0
 
     ∇ r←Version
+    ⍝ Returns the version number from `TatinVars` if possible.
+    ⍝ See also `History`
       :Access Public Shared
-      r←'DotNetZip' '2.3.1+67' '2024-11-15'
+      :If 0<⎕NC'TatinVars.CONFIG'
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢TatinVars.CONFIG).version
+      :ElseIf 0<##.⎕NC'TatinVars.CONFIG'
+          r←(⎕JSON⍠('Dialect' 'JSON5')⊢##.TatinVars.CONFIG).version
+      :Else
+    ⍝ When a script was not loaded with Tatin, there will be no namespace `TatinVars`.
+    ⍝ In such cases we cannot provide a version number, so we return just ''.
+          r←''
+      :EndIf
     ∇
 
     ∇ History
-      :Access Public Shared  
+      :Access Public Shared
     ⍝ * 3.0.0 from 2025-04-03
+    ⍝   * Potentially breaking change: version now return a char vector from the package config file
     ⍝   * Packages updated
     ⍝ * 2.3.1 from 2024-11-15
-    ⍝   * Packages updated 
+    ⍝   * Packages updated
     ⍝ * 2.3.0 from 2024-11-15
     ⍝   * `make` could run into "File is in use by another process" which appears to be caused by
-    ⍝     `DotNetZip` itself, though only on very fast machines. 
-    ⍝     This version is more resilient towards this.      
+    ⍝     `DotNetZip` itself, though only on very fast machines.
+    ⍝     This version is more resilient towards this.
     ⍝ * 2.2.0 from 2024-06-26
     ⍝   * On very fast machines this could run into
     ⍝     "The process cannot access the file ... because it is being used by another process"
