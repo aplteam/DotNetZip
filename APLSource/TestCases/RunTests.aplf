@@ -1,9 +1,12 @@
- RunTests;htmlFilename;verbose
+ RunTests;htmlFilename;choice;rc;log
  Prepare
- T.Run 1
- :If 0<≢T.codeCoverage
+ (rc log)←T.Run 1
+ :If 2≠rc
+ :AndIf 0<≢T.codeCoverage
      {}CodeCoverage.ProcessData T.codeCoverage.filename
-     verbose←2='Type of code coverage report' 0 1 CommTools.Select'Overview' 'Verbose'
-     htmlFilename←verbose CodeCoverage.CreateReport T.codeCoverage.filename
-     ⎕←']Open ',htmlFilename
+     choice←2='Type of code coverage report' 0 1 CommTools.Select'Overview' 'Verbose' 'Nothing'
+     :If choice≠3
+         htmlFilename←(choice=2) CodeCoverage.CreateReport T.codeCoverage.filename
+         ⎕←']Open ',htmlFilename
+     :EndIf
  :EndIf

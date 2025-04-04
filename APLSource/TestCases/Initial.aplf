@@ -1,3 +1,8 @@
- Initial
+ r←Initial
+ r←1
+ :If 'Win'≢APLTreeUtils2.GetOperatingSystem ⍬
+ :AndIf 0={0=≢⍵:0 ⋄ 1=⊃(//)⎕VFI ⍵}2 ⎕NQ'.' 'GetEnvironment' 'DYALOG_NETCORE'
+     r←'.NET is not available and/or DYALOG_CORE is 0'
+ :EndIf
  F←FilesAndDirs
  {}F.Cd ##.CiderConfig.HOME         ⍝ Required by some test cases

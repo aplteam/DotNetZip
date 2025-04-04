@@ -16,7 +16,7 @@
  path myZip.Add'src/level-1-b.txt'
 
  (⊂100⍴' ',1⊃⎕SI)F.NPUT(path,'/src/level-1-b.txt')1
- path myZip.Add'/src/level-1-b.txt'
+ path myZip.Add'src/level-1-b.txt'
 
  myZip.Dispose
  zipFilename ##.DotNetZip.UnzipTo path,'/unzipped'

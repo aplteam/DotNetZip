@@ -11,7 +11,7 @@
  myZip←⎕NEW ##.DotNetZip(,⊂zipFilename)
 
  ##.CiderConfig.HOME myZip.Add'/TestData\level-1-a.txt'
- (##.CiderConfig.HOME,'/TestData\')myZip.Add'/level-1-b.txt'
+ (##.CiderConfig.HOME,'/TestData\')myZip.Add'level-1-b.txt'
  list←myZip.List
 
  expected←F.NormalizePath'TestData\level-1-a.txt' 'level-1-b.txt'

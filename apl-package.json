@@ -20,5 +20,5 @@
   source: "APLSource/DotNetZip.aplc",
   tags: "zip-tools",
   userCommandScript: "",
-  version: "3.0.0+80",
+  version: "3.0.1+85",
 }

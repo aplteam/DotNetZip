@@ -38,6 +38,9 @@
 
     ∇ History
       :Access Public Shared
+    ⍝ * 3.0.1 from 2025-04-04
+    ⍝   * Bug fix on non-Windows platforms: With the `Add` function, when a non-empty left argument
+    ⍝     and a right argument with a leading '/' was specified it did not work.
     ⍝ * 3.0.0 from 2025-04-03
     ⍝   * Potentially breaking change: version now return a char vector from the package config file
     ⍝   * Packages updated
@@ -197,7 +200,7 @@
       parent←{0<⎕NC ⍵:⍎⍵ ⋄ ''}'parent'
       parent←F.EnforceSlash{0=≢⍵:⍵ ⋄ ⍵,(~'/\'∊⍨¯1↑⍵)/F.CurrentSep}parent
       :If (≡toBeZipped)∊0 1
-          toBeZipped←{⍵↓⍨'/\'∊⍨1⍴⍵}toBeZipped
+          toBeZipped←{⍵↓⍨'/\'∊⍨1⍴⍵}⍣(⊃0<≢parent)⊢toBeZipped
           toBeZipped←F.EnforceSlash toBeZipped
           :If F.IsDir parent,toBeZipped
               :If 0<≢list←⊃('recursive' 1)F.Dir parent,toBeZipped,'/*'
@@ -210,7 +213,7 @@
               parent Add_ toBeZipped
           :EndIf
       :Else
-          toBeZipped←{⍵↓⍨'/\'∊⍨1⍴⍵}¨toBeZipped
+          toBeZipped←parent∘{0=≢⍺:⍵ ⋄ ⍵↓⍨'/\'∊⍨1⍴⍵}¨toBeZipped
           toBeZipped←F.EnforceSlash¨toBeZipped
           isDir←F.IsDir parent∘,¨toBeZipped
           :If ∨/~isDir
@@ -386,7 +389,6 @@
 
     ∇ {r}←Initialize dummy;notwindows;netcoreset
       r←⍬
-      CheckMinVersion ⍬
       :If 0=∆INIT
           F←(⊃⊃⎕CLASS ⎕THIS).##.FilesAndDirs
           notwindows←'Win'≢3↑⊃# ⎕WG'APLVersion'
