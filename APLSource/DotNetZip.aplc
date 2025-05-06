@@ -37,7 +37,10 @@
     ∇
 
     ∇ History
-      :Access Public Shared
+      :Access Public Shared  
+    ⍝ * 3.1.0 from 2025-05-06
+    ⍝   * Package `FilesAndDirs` updated
+    ⍝   * New functions `FilesAndDirs.ListFiles2` and `FilesAndDirs.Dir2` used for much faster recursions. 
     ⍝ * 3.0.1 from 2025-04-04
     ⍝   * Bug fix on non-Windows platforms: With the `Add` function, when a non-empty left argument
     ⍝     and a right argument with a leading '/' was specified it did not work.
@@ -203,7 +206,7 @@
           toBeZipped←{⍵↓⍨'/\'∊⍨1⍴⍵}⍣(⊃0<≢parent)⊢toBeZipped
           toBeZipped←F.EnforceSlash toBeZipped
           :If F.IsDir parent,toBeZipped
-              :If 0<≢list←⊃('recursive' 1)F.Dir parent,toBeZipped,'/*'
+              :If 0<≢list←⊃('recurse' 1)F.Dir2 parent,toBeZipped,'/*'
               :AndIf 0<≢list←(F.IsFile list)/list
                   list←(≢parent)↓¨list
                   list←F.EnforceSlash¨list
@@ -333,7 +336,7 @@
       ∆INIT←0
       Initialize ⍬
       sourceFolder,←((0<≢sourceFolder)∧~'/\'∊⍨¯1↑sourceFolder)/'/'
-      fileList←'recursive'F.ListFiles sourceFolder
+      fileList←('recurse' 1)F.ListFiles2 sourceFolder
       fileList←(≢sourceFolder)↓¨fileList
       :If ~∧/b←⎕NEXISTS sourceFolder∘,¨fileList
           ('',⊃{⍺,',',⍵}/(~b)/fileList)Assert 0

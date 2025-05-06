@@ -121,19 +121,18 @@ ul li, ol li {margin: 8pt 3pt;}
 <body>
 <h1 id="top">Coverage Report</h1>
 <p>Watched: 22 fns/opr within <code>#.DotNetZip.DotNetZip</code></p>
-<p>The test suite was executed 2 times:</p>
+<p>The test suite was executed once:</p>
 <table>
 <thead>
 <tr><th>Executed at</th><th>APLVersion</th><th>Memory (MB)</th></tr>
 </thead>
 <tbody>
-<tr><td>2025-04-04 09:26:08</td><td>Windows-64 ⋄ 18.2.50765.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>115</td></tr>
-<tr><td>2025-04-04 09:53:52</td><td>Linux-64 ⋄ 19.0.50027.0 ⋄ S ⋄ Development ⋄ Unicode</td><td>242</td></tr>
+<tr><td>2025-05-06 16:10:06</td><td>Windows-64 ⋄ 19.0.51424.0 ⋄ W ⋄ Development ⋄ Unicode</td><td>112</td></tr>
 </tbody>
 </table>
 <p>Overall 85% of the testable code is covered.</p>
 <p>(Comment lines, empty lines, all <code>:End</code>* lines etc. are ignored)</p>
-<p>15 of the fns/opr are 100% covered.</p>
+<p>14 of the fns/opr are 100% covered.</p>
 <div id="partly-covered" class="keep-together">
 <table id="percent">
 <thead>
@@ -146,6 +145,7 @@ ul li, ol li {margin: 8pt 3pt;}
 <tr><td>#.DotNetZip.DotNetZip.UnzipTo</td><td>12, 13</td><td>67</td><td>6</td></tr>
 <tr><td>#.DotNetZip.DotNetZip.Cleanup</td><td>6</td><td>80</td><td>5</td></tr>
 <tr><td>#.DotNetZip.DotNetZip.make</td><td>7←≢30-31,39-41,43-44</td><td>81</td><td>36</td></tr>
+<tr><td>#.DotNetZip.DotNetZip.Initialize</td><td>8</td><td>89</td><td>9</td></tr>
 <tr><td>#.DotNetZip.DotNetZip.ZipFolder</td><td>13</td><td>90</td><td>10</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.set_ filename</td><td></td><td>100</td><td>0</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.get_ filename</td><td></td><td>100</td><td>0</td></tr>
@@ -158,7 +158,6 @@ ul li, ol li {margin: 8pt 3pt;}
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.Delete</td><td></td><td>100</td><td>5</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.Dispose</td><td></td><td>100</td><td>4</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.ListZipContents</td><td></td><td>100</td><td>2</td></tr>
-<tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.Initialize</td><td></td><td>100</td><td>9</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.Add_</td><td></td><td>100</td><td>4</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.QEX_System</td><td></td><td>100</td><td>1</td></tr>
 <tr class="fullyCovered"><td>#.DotNetZip.DotNetZip.parent</td><td></td><td>100</td><td>0</td></tr>
@@ -186,7 +185,7 @@ $(document).ready(function() {
         },      
         buttons: [
         {
-            text: "Partly covered (6)",
+            text: "Partly covered (7)",
             titleAttr: "50%",
             className: "active",
             action: function ( e, dt, node, config ) {
@@ -214,7 +213,7 @@ $(document).ready(function() {
             }
         },
         {
-            text: "Fully covered (15)",
+            text: "Fully covered (14)",
             titleAttr: "100%",
             className: "active",
             action: function ( e, dt, node, config ) {
